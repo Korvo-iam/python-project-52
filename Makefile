@@ -5,10 +5,10 @@ build:
 	./build.sh
 
 start:
-	uv run gunicorn hexlet_code.wsgi --bind 0.0.0.0:$PORT
+	uv run gunicorn task_manager.wsgi --bind 0.0.0.0:$PORT
 
 render-start:
-	gunicorn hexlet_code.wsgi --bind 0.0.0.0:$PORT
+	gunicorn task_manager.wsgi --bind 0.0.0.0:$PORT
 
 collectstatic:
 	python manage.py collectstatic --noinput || true
