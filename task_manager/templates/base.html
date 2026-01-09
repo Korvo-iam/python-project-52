@@ -1,0 +1,14 @@
+{% load django_bootstrap5 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}My App{% endblock %}</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body class="d-flex h-100 text-center text-white bg-dark">
+    {% block content %}{% endblock %}
+</body>
+</html>

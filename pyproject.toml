@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "Django>=4.2",
+    "django-bootstrap5",
+    "whitenoise",
     "gunicorn",
     "dj-database-url",
     "python-dotenv"
