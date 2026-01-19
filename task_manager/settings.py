@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task_manager',
     'django_bootstrap5',
+    'users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -119,3 +121,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# URL для перенаправления при необходимости логина
+LOGIN_URL = '/login/'
+# Редиректы после успешного логина
+LOGIN_REDIRECT_URL = '/'
+# Редиректы после выхода
+LOGOUT_REDIRECT_URL = '/'

@@ -16,14 +16,20 @@ Including another URLconf
 """
 from django.http import HttpResponse
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from .views import HomeView
+from users.views import LogIn, LogOut
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 def home(request):
     return HttpResponse("Halo")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='home')    
+    path('', HomeView.as_view(), name='home'),
+    path('users/', include('users.urls')),
+    path('login/', LogIn.as_view(), name='login'),
+    path('logout/', LogOut.as_view(), name='logout'),
 ]
 
