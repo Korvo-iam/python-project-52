@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import HomeView
 from users.views import LogIn, LogOut
-from django.contrib.auth.views import LoginView, LogoutView
 
 
 def home(request):
@@ -31,5 +30,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('login/', LogIn.as_view(), name='login'),
     path('logout/', LogOut.as_view(), name='logout'),
+    path('statuses/', include('statuses.urls', namespace='statuses')),
 ]
 

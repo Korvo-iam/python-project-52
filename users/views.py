@@ -39,7 +39,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('user_list')
 
     def dispatch(self, request, *args, **kwargs):
-        # Получаем объект
         obj = self.get_object()
         if obj != request.user and not request.user.is_superuser:
             messages.error(request, "Вы не можете редактировать чужой аккаунт.")
@@ -47,7 +46,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        messages.success(self.request, "Пользователь был изменён!")
+        messages.success(self.request, "Пользователь был изменен!")
         return super().form_valid(form)
 
     def get_form(self, *args, **kwargs):
@@ -60,11 +59,13 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('user_list')
-    success_message = "Пользователь был удалён!"
 
-    def delete(self, request, *args, **kwargs):
-        obj = self.get_object()
-        return super().delete(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        username = self.object.username
+        self.object.delete()
+        messages.success(request, f"Пользователь '{username}' был успешно удален!")
+        return redirect(self.success_url)
 
 class LogIn(LoginView):
     template_name = 'registration/login.html'
