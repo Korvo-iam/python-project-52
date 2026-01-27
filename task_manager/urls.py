@@ -17,8 +17,8 @@ Including another URLconf
 from django.http import HttpResponse
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeView
-from users.views import LogIn, LogOut
+from task_manager.views import HomeView
+from task_manager.users.views import LogIn, LogOut
 
 
 def home(request):
@@ -27,9 +27,9 @@ def home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home'),
-    path('users/', include('users.urls')),
+    path('users/', include('task_manager.users.urls', namespace='users')),
     path('login/', LogIn.as_view(), name='login'),
     path('logout/', LogOut.as_view(), name='logout'),
-    path('statuses/', include('statuses.urls', namespace='statuses')),
+    path('statuses/', include('task_manager.statuses.urls')),
 ]
 

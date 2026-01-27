@@ -11,9 +11,9 @@ render-start:
 	gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 
 collectstatic:
-	python manage.py collectstatic --noinput || true
+	python manage.py collectstatic --noinput
 
 migrate:
-	python manage.py migrate || true
+	python manage.py migrate
 
 PORT ?= 8000
