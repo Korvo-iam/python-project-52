@@ -21,6 +21,7 @@
                             <a class="nav-link {% if request.path == '/users/' %}active{% endif %}" href="{% url 'users:user_list' %}">Пользователи</a>
                         {% if request.user.is_authenticated %}
                             <a class="nav-link {% if request.path == '/statuses/' %}active{% endif %}" href="{% url 'statuses:list' %}">Статусы</a>
+                            <a class="nav-link {% if request.path == '/tasks/' %}active{% endif %}" href="{% url 'tasks:task_list' %}">Задачи</a>
                             <form action="{% url 'logout' %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="nav-link logout-button">

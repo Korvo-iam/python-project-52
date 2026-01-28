@@ -1,0 +1,33 @@
+from django.db import models
+from django.contrib.auth import get_user_model
+
+# Create your models here.
+
+User = get_user_model()
+
+class Task(models.Model):
+    name = models.CharField("Название задачи", max_length=255)
+    description = models.TextField("Описание")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    status = models.ForeignKey(
+        'statuses.Status',
+        on_delete=models.PROTECT,
+        verbose_name="Статус"
+    )
+    executor = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Исполнитель",
+        related_name='tasks_assigned'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Автор",
+        related_name='tasks_created'
+    )
+
+    def __str__(self):
+        return self.name
