@@ -1,10 +1,10 @@
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import ProtectedError
 
 from .models import Status
 from .forms import StatusForm
@@ -14,7 +14,7 @@ class StatusListView(LoginRequiredMixin, ListView):
     template_name = 'statuses/status_list.html'
     context_object_name = 'statuses'
 
-class StatusCreateView(CreateView):
+class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = 'statuses/status_form.html'
@@ -46,7 +46,12 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         name = self.object.name
 
-        self.object.delete()
-        messages.success(request, f"Статус '{name}' успешно удалён!")
+        try:
+            self.object.delete()
+            messages.success(request, f"Статус '{name}' успешно удалён!")
+        except ProtectedError:(
+            request,
+            f"Нельзя удалить статус '{name}', так как он используется в задачах."
+        )
 
         return redirect(self.success_url)

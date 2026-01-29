@@ -30,12 +30,17 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Task
     template_name = 'tasks/task_form.html'
     fields = ['name', 'description', 'status', 'executor']
     success_url = reverse_lazy('tasks:task_list')
     success_message = "Задача успешно обновлена!"
+
+    def test_func(self):
+        user = self.request.user
+        task = self.get_object()
+        return user == task.author or user.is_superuser
 
 class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
@@ -43,7 +48,9 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('tasks:task_list')
 
     def test_func(self):
-        return self.request.user == self.get_object().author
+        user = self.request.user
+        task = self.get_object()
+        return user == task.author or user.is_superuser
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()

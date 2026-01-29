@@ -1,3 +1,6 @@
+test:
+	python3 manage.py test
+
 install:
 	uv sync
 
