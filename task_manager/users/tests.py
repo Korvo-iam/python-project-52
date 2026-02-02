@@ -7,12 +7,11 @@ from django.contrib.messages import get_messages
 
 class UserCRUDTest(TestCase):
 
-    def setUp(self):
-        # суперпользователь для авторизации
+    def setUp(self): #суперпользователь для авторизации
         self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')
         self.client.login(username='admin', password='pass')
     
-    def test_create_user_message(self):
+    def test_create_user_message(self): #проверка flash успешного создания
         response = self.client.post(reverse('users:user_create'), {
             'username': 'flashuser',
             'email': 'flash@test.com',
@@ -22,7 +21,7 @@ class UserCRUDTest(TestCase):
         self.assertTrue(any("успешно создан" in str(m) for m in messages))
         self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин
 
-    def test_update_user_message(self):
+    def test_update_user_message(self): #проверка flash успешного обновления
         user = User.objects.create_user(username='updateuser', password='12345')
         response = self.client.post(reverse('users:user_update', args=[user.id]), {
             'username': 'updated',
@@ -31,13 +30,13 @@ class UserCRUDTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("был изменен" in str(m) for m in messages))
 
-    def test_delete_user_message(self):
+    def test_delete_user_message(self): #проверка flash успешного удаления
         user = User.objects.create_user(username='deluser', password='12345')
         response = self.client.post(reverse('users:user_delete', args=[user.id]), follow=True)
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно удален" in str(m) for m in messages))
 
-    def test_create_user(self):
+    def test_create_user(self): #проверка создания пользователя
         response = self.client.post(reverse('users:user_create'), {
             'username': 'testuser',
             'email': 'test@test.com',
@@ -47,7 +46,7 @@ class UserCRUDTest(TestCase):
         self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин
         self.assertTrue(User.objects.filter(username='testuser').exists())
 
-    def test_update_user(self):
+    def test_update_user(self): #проверка обновления пользователя
         user = User.objects.create_user(username='updateuser', password='12345')
         response = self.client.post(reverse('users:user_update', args=[user.id]), {
             'username': 'updated',
@@ -58,7 +57,7 @@ class UserCRUDTest(TestCase):
         self.assertEqual(user.username, 'updated')
         self.assertEqual(user.email, 'updated@test.com')
 
-    def test_delete_user(self):
+    def test_delete_user(self): #проверка удаления пользователя
         user = User.objects.create_user(username='deluser', password='12345')
         response = self.client.post(reverse('users:user_delete', args=[user.id]))
         self.assertEqual(response.status_code, 302)

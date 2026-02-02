@@ -10,6 +10,9 @@ build:
 start:
 	uv run gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 
+dev:
+	uv run python manage.py runserver 0.0.0.0:${PORT}
+
 render-start:
 	gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 

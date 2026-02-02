@@ -13,7 +13,6 @@
             <a class="mb-0 h3 text-decoration-none" href="{% url 'home' %}">Менеджер задач</a>
                 <nav class="nav nav-masthead">
                     <div class="d-flex gap-2 align-items-center">
-
                         {% if not request.user.is_authenticated %}
                             <a class="nav-link {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Войти</a>
                             <a class="nav-link {% if request.path == '/users/create/' %}active{% endif %}" href="{% url 'users:user_create' %}">Регистрация</a>
@@ -22,6 +21,7 @@
                         {% if request.user.is_authenticated %}
                             <a class="nav-link {% if request.path == '/statuses/' %}active{% endif %}" href="{% url 'statuses:list' %}">Статусы</a>
                             <a class="nav-link {% if request.path == '/tasks/' %}active{% endif %}" href="{% url 'tasks:task_list' %}">Задачи</a>
+                            <a class="nav-link {% if request.path == '/labels/' %}active{% endif %}" href="{% url 'labels:list' %}">Метки</a>
                             <form action="{% url 'logout' %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="nav-link logout-button">
@@ -62,6 +62,6 @@
 
 <style>
 .form-text {
-    color: #adb5bd; /* любой цвет */
+    color: #adb5bd;
 }
 </style>

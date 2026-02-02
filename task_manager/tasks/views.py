@@ -21,7 +21,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     template_name = 'tasks/task_form.html'
-    fields = ['name', 'description', 'status', 'executor']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     template_name = 'tasks/task_form.html'
     success_url = reverse_lazy('tasks:task_list')
     success_message = "Задача успешно создана!"
@@ -33,7 +33,7 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     model = Task
     template_name = 'tasks/task_form.html'
-    fields = ['name', 'description', 'status', 'executor']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy('tasks:task_list')
     success_message = "Задача успешно обновлена!"
 
