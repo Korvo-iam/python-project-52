@@ -17,8 +17,9 @@ Including another URLconf
 from django.http import HttpResponse
 from django.contrib import admin
 from django.urls import path, include
-from task_manager.views import HomeView, test_rollbar_error
+from task_manager.views import HomeView
 from task_manager.users.views import LogIn, LogOut
+#from . import views
 
 
 def home(request):
@@ -26,6 +27,8 @@ def home(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #rollback подключен успешно
+    #path('', views.index, name='index'),   
     path('', HomeView.as_view(), name='home'),
     path('users/', include('task_manager.users.urls', namespace='users')),
     path('login/', LogIn.as_view(), name='login'),
@@ -33,6 +36,5 @@ urlpatterns = [
     path('statuses/', include('task_manager.statuses.urls')),
     path('tasks/', include('task_manager.tasks.urls', namespace='tasks')),
     path('labels/', include('task_manager.labels.urls', namespace='labels')),
-    path('test-rollbar/', test_rollbar_error),
 ]
 

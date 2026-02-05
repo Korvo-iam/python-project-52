@@ -10,22 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-import os
-from dotenv import load_dotenv
+#import os
+#from dotenv import load_dotenv
 import dj_database_url
 from pathlib import Path
-import rollbar
+#import rollbar
 
-load_dotenv()
+#load_dotenv()
 
-ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
-ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT', 'development')
 
-rollbar.init(
-    access_token=ROLLBAR_ACCESS_TOKEN,
-    environment=ROLLBAR_ENVIRONMENT,
-    code_version='1.0'
-)
+#ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
+#ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT', 'development')
+
+#rollbar.init(
+#    access_token=ROLLBAR_ACCESS_TOKEN,
+#    environment=ROLLBAR_ENVIRONMENT,
+#    code_version='1.0'
+#)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,6 +73,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
+
+ROLLBAR = {
+    'access_token': 'fd05204070a04532ad561eec47af6a26',
+    'environment': 'development' if DEBUG else 'production',
+    'code_version': '1.0',
+    'root': BASE_DIR,
+}
+
 
 ROOT_URLCONF = 'task_manager.urls'
 
