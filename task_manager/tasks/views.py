@@ -1,3 +1,4 @@
+from .filters import TaskFilter
 from django.shortcuts import redirect
 from .models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -12,6 +13,20 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/task_list.html'
     context_object_name = 'tasks'
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        self.filterset = TaskFilter(
+            self.request.GET,
+            queryset=queryset,
+            request=self.request
+        )
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.filterset
+        return context
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task

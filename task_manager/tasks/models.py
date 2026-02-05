@@ -8,7 +8,7 @@ User = get_user_model()
 
 class Task(models.Model):
     name = models.CharField("Название задачи", max_length=255)
-    description = models.TextField("Описание")
+    description = models.TextField("Описание", blank=True)
     labels = models.ManyToManyField(Label, blank=True, related_name='tasks')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     status = models.ForeignKey(

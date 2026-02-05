@@ -10,6 +10,7 @@ dependencies = [
     "whitenoise",
     "gunicorn",
     "dj-database-url",
+    "django-filter>=25.2",
     "python-dotenv"
 ]
 
