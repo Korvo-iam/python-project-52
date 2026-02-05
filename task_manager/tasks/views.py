@@ -7,7 +7,13 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 
+#
+from django.http import HttpResponse
 # Create your views here.
+
+def test_rollbar_error(request):
+    1 / 0  # искусственная ошибка
+    return HttpResponse("This won't run")
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
