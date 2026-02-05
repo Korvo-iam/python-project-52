@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from task_manager.views import HomeView
 from task_manager.users.views import LogIn, LogOut
+from task_manager.tasks import views as task_views
 
 
 def home(request):
@@ -33,5 +34,6 @@ urlpatterns = [
     path('statuses/', include('task_manager.statuses.urls')),
     path('tasks/', include('task_manager.tasks.urls', namespace='tasks')),
     path('labels/', include('task_manager.labels.urls', namespace='labels')),
+    path('test-rollbar/', task_views.test_rollbar_error),
 ]
 
