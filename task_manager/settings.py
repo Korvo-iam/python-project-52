@@ -11,12 +11,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 #import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 import dj_database_url
 from pathlib import Path
 #import rollbar
 
-#load_dotenv()
+load_dotenv()
 
 
 #ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
