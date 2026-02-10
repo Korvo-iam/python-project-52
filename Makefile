@@ -1,5 +1,5 @@
 test:
-	uv run python manage.py test
+	run python manage.py test
 
 install:
 	uv sync
@@ -17,13 +17,13 @@ render-start:
 	gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 
 collectstatic:
-	uv python manage.py collectstatic --noinput
+	python manage.py collectstatic --noinput
 
 ci-migrate:
 	uv run python manage.py makemigrations --noinput && \
     	uv run python manage.py migrate --noinput
 
 migrate:
-	uv python manage.py migrate
+	python manage.py migrate
 
 PORT ?= 8000
