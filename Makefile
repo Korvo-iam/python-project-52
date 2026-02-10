@@ -1,5 +1,4 @@
 test:
-	uv run python manage.py migrate
 	uv run python manage.py test
 
 install:
@@ -19,6 +18,10 @@ render-start:
 
 collectstatic:
 	uv python manage.py collectstatic --noinput
+
+ci-migrate:
+	uv run python manage.py makemigrations --noinput && \
+    	uv run python manage.py migrate --noinput
 
 migrate:
 	uv python manage.py migrate
