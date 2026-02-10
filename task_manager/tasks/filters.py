@@ -6,17 +6,20 @@ from .models import Task
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
         queryset=Task._meta.get_field('status').related_model.objects.all(),
-        empty_label='---------'
+        empty_label='---------',
+        label='Статус'
     )
 
     executor = django_filters.ModelChoiceFilter(
         queryset=Task._meta.get_field('executor').related_model.objects.all(),
-        empty_label='---------'
+        empty_label='---------',
+        label='Исполнитель'
     )
 
     labels = django_filters.ModelChoiceFilter(
         queryset=Task._meta.get_field('labels').related_model.objects.all(),
-        empty_label='---------'
+        empty_label='---------',
+        label='Метка'
     )
 
     self_tasks = django_filters.BooleanFilter(
