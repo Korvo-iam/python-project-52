@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-#import os
+import os
 from dotenv import load_dotenv
 import dj_database_url
 from pathlib import Path
@@ -19,8 +19,8 @@ from pathlib import Path
 load_dotenv()
 
 
-#ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
-#ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT', 'development')
+ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
+ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT', 'development')
 
 #rollbar.init(
 #    access_token=ROLLBAR_ACCESS_TOKEN,
