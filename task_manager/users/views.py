@@ -6,6 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
+from django.db.models import ProtectedError
 User = get_user_model()
 
 class UserListView(ListView):
@@ -64,8 +65,11 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         username = self.object.username
-        self.object.delete()
-        messages.success(request, f"Пользователь '{username}' был успешно удален!")
+        try:
+            self.object.delete()
+            messages.success(request, f"Пользователь '{username}' был успешно удален!")
+        except ProtectedError:
+            messages.error(request, f"Нельзя удалить пользователя '{username}', пока у него есть задачи.")
         return redirect(self.success_url)
 
 class LogIn(LoginView):

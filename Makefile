@@ -1,5 +1,5 @@
 test:
-	run python manage.py test
+	uv run python manage.py test
 
 install:
 	uv sync
@@ -24,6 +24,6 @@ ci-migrate:
     	uv run python manage.py migrate --noinput
 
 migrate:
-	python manage.py migrate
+	uv python manage.py migrate
 
 PORT ?= 8000
