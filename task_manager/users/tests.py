@@ -8,25 +8,30 @@ User = get_user_model()
 
 class UserCRUDTest(TestCase):
 
-    def setUp(self): #суперпользователь для авторизации
-        self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')
+    def setUp(self):  # суперпользователь для авторизации
+        self.admin = User.objects.create_superuser(username='admin', password='pass')
         self.client.login(username='admin', password='pass')
     
     def test_create_user_message(self): #проверка flash успешного создания
         response = self.client.post(reverse('users:user_create'), {
             'username': 'flashuser',
-            'email': 'flash@test.com',
-            'password': '12345'
+            'first_name': 'flash',
+            'last_name': 'user',
+            'password1': '12345',
+            'password2': '12345'
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно создан" in str(m) for m in messages))
-        self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин
+        self.assertRedirects(response, reverse('login')) #проверка на редирект на логин
 
     def test_update_user_message(self): #проверка flash успешного обновления
         user = User.objects.create_user(username='updateuser', password='12345')
         response = self.client.post(reverse('users:user_update', args=[user.id]), {
             'username': 'updated',
-            'email': 'updated@test.com'
+            'first_name': 'updated',
+            'last_name': 'user',
+            'password1': '12345',
+            'password2': '12345'
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("был изменен" in str(m) for m in messages))
@@ -40,8 +45,10 @@ class UserCRUDTest(TestCase):
     def test_create_user(self): #проверка создания пользователя
         response = self.client.post(reverse('users:user_create'), {
             'username': 'testuser',
-            'email': 'test@test.com',
-            'password': '12345'
+            'first_name': 'test',
+            'last_name': 'user',
+            'password1': '12345',
+            'password2': '12345'
         })
         self.assertEqual(response.status_code, 302)  # редирект после создания
         self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин
@@ -49,18 +56,23 @@ class UserCRUDTest(TestCase):
 
     def test_update_user(self): #проверка обновления пользователя
         user = User.objects.create_user(username='updateuser', password='12345')
-        response = self.client.post(reverse('users:user_update', args=[user.id]), {
-            'username': 'updated',
-            'email': 'updated@test.com'
-        })
+        response = self.client.post(
+            reverse('users:user_update', args=[user.id]),
+            {
+                'username': 'updated',
+                'first_name': 'updated',
+                'last_name': 'user',
+                'password1': '123456',
+                'password2': '123456'
+            }
+        )
         self.assertEqual(response.status_code, 302)
         user.refresh_from_db()
         self.assertEqual(user.username, 'updated')
-        self.assertEqual(user.email, 'updated@test.com')
 
-    def test_delete_user(self): #проверка удаления пользователя
+    def test_delete_user(self):
         user = User.objects.create_user(username='deluser', password='12345')
-        response = self.client.post(reverse('users:user_delete', args=[user.id]))
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(User.objects.filter(username='deluser').exists())
-
+        response = self.client.post(reverse('users:user_delete', args=[user.id]), follow=True)
+        messages = list(get_messages(response.wsgi_request)) #проверка flash-сообщения
+        self.assertTrue(any("успешно удален" in str(m) for m in messages))
+        self.assertFalse(User.objects.filter(username='deluser').exists()) #проверка удаления пользователя
