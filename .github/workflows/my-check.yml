@@ -11,21 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Скачиваем код
+      # код
       - uses: actions/checkout@v3
 
-      # 2. Устанавливаем Python
+      # Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # замени на версию, которую ты используешь
+          python-version: '3.11'
 
-      # 3. Устанавливаем зависимости
+      # зависимости
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -e .
 
-      # 4. Запускаем тесты через Makefile
+      # тесты
       - name: Run tests
-        run: make test
+        run: python3 manage.py test
