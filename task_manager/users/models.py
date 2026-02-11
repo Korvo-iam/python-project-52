@@ -8,12 +8,12 @@ class User(AbstractUser):
     first_name = models.CharField(
         max_length=150,
         blank=False,
-        verbose_name=_('First Name')
+        verbose_name=_('Имя')
     )
     last_name = models.CharField(
         max_length=150,
         blank=False,
-        verbose_name=_('Last Name')
+        verbose_name=_('Фамилия')
     )
     USERNAME_FIELD = 'username'
 

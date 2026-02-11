@@ -46,6 +46,16 @@
                 <th>Дата создания</th>
                 <td>{{ tasks.created_at|date:"d.m.Y H:i" }}</td>
             </tr>
+            <tr>
+                <th>Метки</th>
+                <td>
+                    {% for label in tasks.labels.all %}
+                        <span class="badge bg-info">{{ label.name }}</span>
+                    {% empty %}
+                        —
+                    {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

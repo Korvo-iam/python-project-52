@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
 from django.db.models import ProtectedError
+from .forms import UserForm
 User = get_user_model()
 
 class UserListView(ListView):
@@ -16,28 +17,19 @@ class UserListView(ListView):
 
 class UserCreateView(CreateView):
     model = User
+    form_class = UserForm
     template_name = 'users/user_form.html'
-    fields = ['username', 'email', 'password']
     success_url = reverse_lazy('login')
-
-    def get_form(self, *args, **kwargs):
-        form = super().get_form(*args, **kwargs)
-        form.fields['username'].label = 'Никнейм'
-        form.fields['email'].label = 'E-mail адресс'
-        form.fields['password'].label = 'Пароль'
-        return form
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        user.set_password(form.cleaned_data['password'])
-        user.save()
         messages.success(self.request, f"Пользователь успешно создан!")
         return super().form_valid(form)
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
+    form_class = UserForm
     template_name = 'users/user_form.html'
-    fields = ['username', 'email']
     success_url = reverse_lazy('users:user_list')
 
     def dispatch(self, request, *args, **kwargs):
@@ -48,13 +40,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
+        user = form.save(commit=False)
         messages.success(self.request, "Пользователь был изменен!")
         return super().form_valid(form)
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        form.fields['username'].label = 'Никнейм'
-        form.fields['email'].label = 'E-mail адрес'
         return form
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):

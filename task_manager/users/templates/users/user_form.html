@@ -7,12 +7,24 @@
 {% block content %}
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
     <main class="px-3 text-center">
-        <h1>Создать пользователя</h1>
-            <form method="post" class="text-start mx-auto p-4 border rounded shadow-sm bg-dark" style="max-width: 400px;">
-                {% csrf_token %}
-                {% bootstrap_form form layout='vertical' %}
-                <button type="submit" class="btn btn-primary mt-3 w-100">Войти</button>
-            </form>
+        <h1>
+            {% if form.instance.pk %}
+                Изменить пользователя
+            {% else %}
+                Создать пользователя
+            {% endif %}
+        </h1>
+        <form method="post" class="text-start mx-auto p-4 border rounded shadow-sm bg-dark" style="max-width: 400px;">
+            {% csrf_token %}
+            {% bootstrap_form form layout='vertical' %}
+            <button type="submit" class="btn btn-primary mt-3 w-100">
+                {% if form.instance.pk %}
+                    Изменить
+                {% else %}
+                    Создать
+                {% endif %}
+            </button>
+        </form>
     </main>
 </div>
 {% endblock %}
