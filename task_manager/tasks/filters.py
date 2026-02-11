@@ -32,6 +32,12 @@ class TaskFilter(django_filters.FilterSet):
         model = Task
         fields = ['status', 'executor', 'labels']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.filters['executor'].field.label_from_instance = \
+            lambda obj: obj.username or f"User {obj.pk}"
+
     def filter_self_tasks(self, queryset, name, value):
         if value:
             return queryset.filter(author=self.request.user)
