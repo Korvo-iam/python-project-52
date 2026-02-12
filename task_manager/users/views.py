@@ -73,6 +73,10 @@ class LogIn(LoginView):
         form.fields['password'].label = 'Пароль'
         return form
     
+    def form_valid(self, form):
+        messages.success(self.request, "Вы залогинены!")
+        return super().form_valid(form)
+    
     def get_success_url(self):
         return reverse_lazy('home')
 
