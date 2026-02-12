@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-12 18:03+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: task_manager/labels/views.py:23
+msgid "Метка успешно создана!"
+msgstr "Label successfully created!"
+
+#: task_manager/labels/views.py:31
+msgid "Метка успешно изменена!"
+msgstr "Label successfully updated!"
+
+#: task_manager/labels/views.py:42
+msgid "Нельзя удалить метку, если она используется в задачах."
+msgstr "Cannot delete label if it is used in tasks"
+
+#: task_manager/labels/views.py:46
+#, python-brace-format
+msgid "Метка '{name}' успешно удалена!"
+msgstr "Label '{name}' successfully deleted!"
+
+#: task_manager/statuses/views.py:23
+msgid "Статус успешно создан!"
+msgstr "Status successfully created!"
+
+#: task_manager/statuses/views.py:34
+msgid "Статус успешно изменен!"
+msgstr "Status successfully updated!"
+
+#: task_manager/statuses/views.py:47
+#, python-brace-format
+msgid "Статус '{name}' успешно удалён!"
+msgstr "Status '{name}' successfully deleted!"
+
+#: task_manager/statuses/views.py:48
+#, python-brace-format
+msgid "Нельзя удалить статус '{name}', так как он используется в задачах."
+msgstr "Cannot delete Status '{name}', because it is used in tasks"
+
+#: task_manager/tasks/views.py:43
+msgid "Задача успешно создана!"
+msgstr "Task successfully created!"
+
+#: task_manager/tasks/views.py:54
+msgid "Задача успешно обновлена!"
+msgstr "Task successfully updated!"
+
+#: task_manager/tasks/views.py:75
+#, python-brace-format
+msgid "Задача '{task}' была успешно удалена!"
+msgstr "Task '{task}' successfully deleted!"
+
+#: task_manager/templates/index.html:10
+msgid "Home"
+msgstr ""
+
+#: task_manager/templates/index.html:11
+msgid "Login"
+msgstr ""
+
+#: task_manager/templates/index.html:12
+msgid "Users"
+msgstr ""
+
+#: task_manager/templates/index.html:18
+msgid "Welcome"
+msgstr ""
+
+#: task_manager/templates/index.html:19
+msgid "A simple Django app with server‑rendered Bootstrap UI"
+msgstr ""
+
+#: task_manager/templates/index.html:21
+msgid "Get started"
+msgstr ""
+
+#: task_manager/users/models.py:11
+msgid "Имя"
+msgstr ""
+
+#: task_manager/users/models.py:16
+msgid "Фамилия"
+msgstr ""
+
+#: task_manager/users/views.py:28
+msgid "Пользователь успешно создан!"
+msgstr ""
+
+#: task_manager/users/views.py:40
+msgid "Вы не можете редактировать чужой аккаунт."
+msgstr ""
+
+#: task_manager/users/views.py:46
+msgid "Пользователь был изменен!"
+msgstr ""
+
+#: task_manager/users/views.py:63
+#, python-brace-format
+msgid "Пользователь '{username}' был успешно удален!"
+msgstr ""
+
+#: task_manager/users/views.py:65
+#, python-brace-format
+msgid "Нельзя удалить пользователя '{username}', пока у него есть задачи."
+msgstr ""
+
+#: task_manager/users/views.py:79
+msgid "Вы залогинены!"
+msgstr ""
+
+#: task_manager/users/views.py:89
+msgid "Вы разлогинены!"
+msgstr ""
