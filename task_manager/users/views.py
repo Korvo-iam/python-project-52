@@ -82,3 +82,7 @@ class LogIn(LoginView):
 
 class LogOut(LogoutView):
     next_page = 'home'
+    
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, "Вы разлогинены!")
+        return super().dispatch(request, *args, **kwargs)
