@@ -50,7 +50,7 @@ class TaskCRUDTest(TestCase):
         )
         response = self.client.post(reverse('tasks:task_delete', args=[task.id]), follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("была успешно удалена!" in str(m) for m in messages))
+        self.assertTrue(any("Задача успешно удалена!" in str(m) for m in messages))
 
     def test_create_task(self): #проверка создания задачи
         response = self.client.post(reverse('tasks:task_create'), {

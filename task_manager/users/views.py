@@ -57,12 +57,11 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        username = self.object.username
         try:
             self.object.delete()
-            messages.success(request, _("Пользователь '{username}' был успешно удален!").format(username=username))
+            messages.success(request, _("Пользователь успешно удален!"))
         except ProtectedError:
-            messages.error(request, _("Нельзя удалить пользователя '{username}', пока у него есть задачи.").format(username=username))
+            messages.error(request, _("Нельзя удалить пользователя, пока у него есть задачи."))
         return redirect(self.success_url)
 
 class LogIn(LoginView):

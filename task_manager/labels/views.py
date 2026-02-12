@@ -41,7 +41,6 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
         if self.object.tasks.exists():
             messages.error(request, _("Нельзя удалить метку, если она используется в задачах."))
             return redirect('labels:list')
-        name = self.object.name
         self.object.delete()
-        messages.success(request, _("Метка '{name}' успешно удалена!").format(name=name))
+        messages.success(request, _("Метка успешно удалена!"))
         return redirect(self.success_url)

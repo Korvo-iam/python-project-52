@@ -70,7 +70,6 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        task = self.object.name
         self.object.delete()
-        messages.success(request, _("Задача '{task}' была успешно удалена!").format(task=task))
+        messages.success(request, _("Задача успешно удалена!"))
         return redirect(self.success_url)
