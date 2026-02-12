@@ -21,7 +21,7 @@ class UserCRUDTest(TestCase):
             'password2': '12345'
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("успешно создан" in str(m) for m in messages))
+        self.assertTrue(any("успешно зарегистрирован" in str(m) for m in messages))
         self.assertRedirects(response, reverse('login')) #проверка на редирект на логин
 
     def test_update_user_message(self): #проверка flash успешного обновления
