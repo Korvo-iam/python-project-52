@@ -33,7 +33,7 @@
                 <td>{{ status.name }}</td>
                 <td>{{ status.created|date:"d.m.Y H:i" }}</td>
                 <td>
-                    <a href="{% url 'statuses:update' status.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                    <a href="{% url 'statuses:update' status.pk %}" class="btn btn-sm btn-warning">Изменить</a>
                     <a href="{% url 'statuses:delete' status.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                 </td>
             </tr>

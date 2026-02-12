@@ -78,7 +78,7 @@
                 <td>
                     <a href="{% url 'tasks:task_update' task.pk %}"
                        class="btn btn-sm btn-warning">
-                        Редактировать
+                        Изменить
                     </a>
 
                     {% if task.author == request.user or request.user.is_superuser %}

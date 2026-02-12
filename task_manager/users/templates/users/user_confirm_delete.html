@@ -9,7 +9,7 @@
     <h1>Удалить пользователя "{{ object.username }}"?</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Удалить</button>
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
         <a href="{% url 'users:user_list' %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
