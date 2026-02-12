@@ -27,7 +27,7 @@ class StatusCRUDTest(TestCase):
         status = Status.objects.create(name='Удаляемый')
         response = self.client.post(reverse('statuses:delete', args=[status.id]), follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("успешно удалён" in str(m) for m in messages))
+        self.assertTrue(any("успешно удален" in str(m) for m in messages))
 
     def test_list_statuses(self): #проверка отображения созданных меток
         Status.objects.create(name='Новый')
