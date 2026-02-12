@@ -5,14 +5,14 @@
 {% load django_bootstrap5 %}
 
 {% block title %}
-    {% if object %}Редактировать{% else %}Создать{% endif %} метку
+    {% if object %}Изменение метки{% else %}Создать метку{% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
     <main class="px-3 text-center">
         <h1>
-            {% if object %}Редактировать{% else %}Создать{% endif %} метку
+            {% if object %}Изменение метки{% else %}Создать метку{% endif %}
         </h1>
         <form method="post"
               class="text-start mx-auto p-4 border rounded shadow-sm bg-dark"
@@ -21,7 +21,7 @@
             {% bootstrap_form form layout='vertical' %}
             <button type="submit"
                     class="btn btn-primary mt-3 w-100">
-                Сохранить
+                {% if object %}Изменить{% else %}Создать{% endif %}
             </button>
         </form>
     </main>
