@@ -69,7 +69,7 @@ class LogIn(LoginView):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
-        form.fields['username'].label = 'Никнейм'
+        form.fields['username'].label = 'Имя пользователя'
         form.fields['password'].label = 'Пароль'
         return form
     
