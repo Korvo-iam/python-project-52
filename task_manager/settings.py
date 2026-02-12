@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-import os
+
 from dotenv import load_dotenv
-import dj_database_url
 from pathlib import Path
+import dj_database_url
+import os
 #import rollbar
 
 load_dotenv()
@@ -136,6 +137,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
+LANGUAGES = [
+    ('ru', 'Russian'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'Etc/GMT-5'
 

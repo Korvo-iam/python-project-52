@@ -1,11 +1,13 @@
-from .filters import TaskFilter
-from django.shortcuts import redirect
-from .models import Task
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext as _
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.contrib import messages
+from .filters import TaskFilter
+from .models import Task
+
 # Create your views here.
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -38,7 +40,7 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     fields = ['name', 'description', 'status', 'executor', 'labels']
     template_name = 'tasks/task_form.html'
     success_url = reverse_lazy('tasks:task_list')
-    success_message = "Задача успешно создана!"
+    success_message = _("Задача успешно создана!")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -49,7 +51,7 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
     template_name = 'tasks/task_form.html'
     fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy('tasks:task_list')
-    success_message = "Задача успешно обновлена!"
+    success_message = _("Задача успешно обновлена!")
 
     def test_func(self):
         user = self.request.user
@@ -70,5 +72,5 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         self.object = self.get_object()
         task = self.object.name
         self.object.delete()
-        messages.success(request, f"Задача '{task}' была успешно удалена!")
+        messages.success(request, _("Задача '{task}' была успешно удалена!").format(task=task))
         return redirect(self.success_url)

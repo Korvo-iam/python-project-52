@@ -1,13 +1,14 @@
-from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import gettext as _
 from django.db.models import ProtectedError
-
-from .models import Status
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.contrib import messages
 from .forms import StatusForm
+from .models import Status
+
 
 class StatusListView(LoginRequiredMixin, ListView):
     model = Status
@@ -19,7 +20,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
     form_class = StatusForm
     template_name = 'statuses/status_form.html'
     success_url = reverse_lazy('statuses:list')
-    success_message = 'Статус успешно создан!'
+    success_message = _('Статус успешно создан!')
 
     def form_valid(self, form):
         messages.success(self.request, self.success_message)
@@ -30,7 +31,7 @@ class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = StatusForm
     template_name = 'statuses/status_form.html'
     success_url = reverse_lazy('statuses:list')
-    success_message = "Статус успешно изменен!"
+    success_message = _("Статус успешно изменен!")
 
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
@@ -39,19 +40,10 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('statuses:list')
 
     def post(self, request, *args, **kwargs):
-        #раскомментить когда появятся Task
-        #if status.task_set.exists():
-        #    messages.error(request, "Нельзя удалить статус, если он используется в задачах.")
-        #    return redirect('statuses:list')
         self.object = self.get_object()
         name = self.object.name
-
         try:
             self.object.delete()
-            messages.success(request, f"Статус '{name}' успешно удалён!")
-        except ProtectedError:(
-            request,
-            f"Нельзя удалить статус '{name}', так как он используется в задачах."
-        )
-
+            messages.success(request, _("Статус '{name}' успешно удалён!").format(name=name))
+        except ProtectedError:(request,_("Нельзя удалить статус '{name}', так как он используется в задачах.").format(name=name))
         return redirect(self.success_url)
