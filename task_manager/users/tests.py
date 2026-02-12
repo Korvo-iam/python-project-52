@@ -34,7 +34,7 @@ class UserCRUDTest(TestCase):
             'password2': '12345'
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("был изменен" in str(m) for m in messages))
+        self.assertTrue(any("успешно изменен" in str(m) for m in messages))
 
     def test_delete_user_message(self): #проверка flash успешного удаления
         user = User.objects.create_user(username='deluser', password='12345')

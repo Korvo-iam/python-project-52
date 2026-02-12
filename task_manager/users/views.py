@@ -43,7 +43,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        messages.success(self.request, _("Пользователь был изменен!"))
+        messages.success(self.request, _("Пользователь успешно изменен!"))
         return super().form_valid(form)
 
     def get_form(self, *args, **kwargs):
