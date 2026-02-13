@@ -70,7 +70,7 @@ class LabelCRUDTest(TestCase):
         task.labels.add(label)
         response = self.client.post(reverse('labels:delete', args=[label.id]), follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("используется в задачах" in str(m) for m in messages))
+        self.assertTrue(any("Невозможно удалить метку" in str(m) for m in messages))
         self.assertTrue(Label.objects.filter(id=label.id).exists())
 
     def test_access_requires_login(self): #проверка на безуспешность просмотра списка меток неавторизованным пользователем
