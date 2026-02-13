@@ -13,6 +13,9 @@ start:
 dev:
 	uv run python manage.py runserver 0.0.0.0:${PORT}
 
+check:
+	uv run ruff check
+
 render-start:
 	gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 

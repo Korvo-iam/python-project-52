@@ -24,7 +24,6 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        user = form.save(commit=False)
         messages.success(self.request, _("Пользователь успешно зарегистрирован!"))
         return super().form_valid(form)
 
@@ -42,7 +41,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save(commit=False)
         messages.success(self.request, _("Пользователь успешно изменен!"))
         return super().form_valid(form)
 
