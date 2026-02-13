@@ -12,23 +12,23 @@ User = get_user_model()
 class LabelCRUDTest(TestCase):
 
     def setUp(self):  # создание суперпользователя
-        self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')# noqa: E501
+        self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')  # noqa: E501
         self.client.login(username='admin', password='pass')
 
     def test_create_label_message(self):  # проверка flash успешного создания
-        response = self.client.post(reverse('labels:create'), {'name': 'Flash метка'}, follow=True)# noqa: E501
+        response = self.client.post(reverse('labels:create'), {'name': 'Flash метка'}, follow=True)  # noqa: E501
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно создана" in str(m) for m in messages))
 
     def test_update_label_message(self):  # проверка flash успешного обновления
         label = Label.objects.create(name='Старая')
-        response = self.client.post(reverse('labels:update', args=[label.id]), {'name': 'Новая'}, follow=True)# noqa: E501
+        response = self.client.post(reverse('labels:update', args=[label.id]), {'name': 'Новая'}, follow=True)  # noqa: E501
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно изменена" in str(m) for m in messages))
 
     def test_delete_label_message(self):  # проверка flash успешного удаления
         label = Label.objects.create(name='Удаляемая')
-        response = self.client.post(reverse('labels:delete', args=[label.id]), follow=True)# noqa: E501
+        response = self.client.post(reverse('labels:delete', args=[label.id]), follow=True)  # noqa: E501
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно удалена" in str(m) for m in messages))
 
@@ -41,13 +41,13 @@ class LabelCRUDTest(TestCase):
         self.assertContains(response, 'Метка2')
 
     def test_create_label(self):  # проверка создания метки
-        response = self.client.post(reverse('labels:create'), {'name': 'Тестовая метка'})
+        response = self.client.post(reverse('labels:create'), {'name': 'Тестовая метка'})  # noqa: E501
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Label.objects.filter(name='Тестовая метка').exists())
 
     def test_update_label(self):  # проверка обновления метки
         label = Label.objects.create(name='Старая метка')
-        response = self.client.post(reverse('labels:update', args=[label.id]), {'name': 'Новая метка'})# noqa: E501
+        response = self.client.post(reverse('labels:update', args=[label.id]), {'name': 'Новая метка'})  # noqa: E501
         self.assertEqual(response.status_code, 302)
         label.refresh_from_db()
         self.assertEqual(label.name, 'Новая метка')
@@ -58,7 +58,7 @@ class LabelCRUDTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Label.objects.filter(name='Удаляемая метка').exists())
 
-    def test_cannot_delete_label_linked_to_task(self):  # проверка невозможности удаления метки со связанной задачей
+    def test_cannot_delete_label_linked_to_task(self):  # проверка невозможности удаления метки со связанной задачей   # noqa: E501
         label = Label.objects.create(name='Связанная метка')
         status = Status.objects.create(name='Новый статус')
         user = User.objects.create_user(username='user', password='pass')
@@ -69,15 +69,16 @@ class LabelCRUDTest(TestCase):
             author=user
         )
         task.labels.add(label)
-        response = self.client.post(reverse('labels:delete', args=[label.id]), follow=True)# noqa: E501
+        response = self.client.post(reverse('labels:delete', args=[label.id]), follow=True)  # noqa: E501
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("Невозможно удалить метку" in str(m) for m in messages))
+        self.assertTrue(any("Невозможно удалить метку" in str(m) for m in messages))  # noqa: E501
         self.assertTrue(Label.objects.filter(id=label.id).exists())
 
-    def test_access_requires_login(self):  # проверка на безуспешность просмотра списка меток неавторизованным пользователем
+    def test_access_requires_login(self):  # проверка на безуспешность просмотра списка меток неавторизованным пользователем  # noqa: E501
         self.client.logout()
         response = self.client.get(reverse('labels:list'))
         self.assertRedirects(response, '/login/?next=/labels/')
+
 
 class TaskFilterTest(TestCase):
 
@@ -114,21 +115,21 @@ class TaskFilterTest(TestCase):
         self.client.login(username='user1', password='pass')
 
     def test_filter_tasks_by_status(self):
-        response = self.client.get(reverse('tasks:task_list'), {'status': self.status1.id})
+        response = self.client.get(reverse('tasks:task_list'), {'status': self.status1.id})  # noqa: E501
         self.assertContains(response, 'Задача 1')
         self.assertNotContains(response, 'Задача 2')
 
     def test_filter_tasks_by_executor(self):
-        response = self.client.get(reverse('tasks:task_list'), {'executor': self.user2.id})
+        response = self.client.get(reverse('tasks:task_list'), {'executor': self.user2.id})  # noqa: E501
         self.assertContains(response, 'Задача 1')
         self.assertNotContains(response, 'Задача 2')
 
     def test_filter_tasks_by_label(self):
-        response = self.client.get(reverse('tasks:task_list'), {'labels': self.label1.id})
+        response = self.client.get(reverse('tasks:task_list'), {'labels': self.label1.id})  # noqa: E501
         self.assertContains(response, 'Задача 1')
         self.assertNotContains(response, 'Задача 2')
 
     def test_filter_tasks_by_author(self):
-        response = self.client.get(reverse('tasks:task_list'), {'self_tasks': 'on'})
+        response = self.client.get(reverse('tasks:task_list'), {'self_tasks': 'on'})  # noqa: E501
         self.assertContains(response, 'Задача 1')
         self.assertNotContains(response, 'Задача 2')

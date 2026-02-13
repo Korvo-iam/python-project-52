@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Status(models.Model):
     name = models.CharField("Имя", max_length=255, unique=True)
     created = models.DateTimeField(auto_now_add=True)

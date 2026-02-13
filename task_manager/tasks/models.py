@@ -6,6 +6,7 @@ from task_manager.labels.models import Label
 
 User = get_user_model()
 
+
 class Task(models.Model):
     name = models.CharField("Имя", max_length=255)
     description = models.TextField("Описание", blank=True)
@@ -35,7 +36,7 @@ class Task(models.Model):
     related_name='tasks',
     verbose_name="Метки"
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")  # noqa: E501
 
     def __str__(self):
         return self.name

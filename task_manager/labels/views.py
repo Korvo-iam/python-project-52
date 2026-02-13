@@ -9,6 +9,7 @@ from .models import Label
 
 # Create your views here.
 
+
 class LabelListView(LoginRequiredMixin, ListView):
     model = Label
     template_name = 'labels/label_list.html'

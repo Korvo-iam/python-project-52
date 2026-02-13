@@ -10,7 +10,7 @@ User = get_user_model()
 class TaskCRUDTest(TestCase):
 
     def setUp(self): #создание суперпользователя
-        self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')
+        self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')  # noqa: E501
         self.client.login(username='admin', password='pass')
         self.status = Status.objects.create(name='Новый')# создаём статус для задач
 

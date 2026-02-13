@@ -15,6 +15,7 @@ class StatusListView(LoginRequiredMixin, ListView):
     template_name = 'statuses/status_list.html'
     context_object_name = 'statuses'
 
+
 class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status
     form_class = StatusForm
@@ -25,6 +26,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         messages.success(self.request, self.success_message)
         return super().form_valid(form)
+
 
 class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Status
@@ -44,7 +46,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         name = self.object.name
         try:
             self.object.delete()
-            messages.success(request, _("Статус успешно удален!").format(name=name))
+            messages.success(request, _("Статус успешно удален!").format(name=name))  # noqa: E501
         except ProtectedError:
-            messages.error(request,_("Невозможно удалить статус.").format(name=name))
+            messages.error(request, _("Невозможно удалить статус.").format(name=name))  # noqa: E501
         return redirect(self.success_url)
