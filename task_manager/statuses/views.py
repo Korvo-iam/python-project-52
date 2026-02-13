@@ -45,5 +45,6 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
         try:
             self.object.delete()
             messages.success(request, _("Статус успешно удален!").format(name=name))
-        except ProtectedError:(request,_("Невозможно удалить статус.").format(name=name))
+        except ProtectedError:
+            messages.error(request,_("Невозможно удалить статус.").format(name=name))
         return redirect(self.success_url)
