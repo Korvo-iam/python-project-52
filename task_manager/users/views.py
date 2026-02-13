@@ -37,7 +37,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj != request.user and not request.user.is_superuser:
-            messages.error(request, _("Вы не можете редактировать чужой аккаунт."))
+            messages.error(request, _("У вас нет прав для изменения другого пользователя."))
             return redirect('users:user_list')
         return super().dispatch(request, *args, **kwargs)
 
@@ -54,6 +54,13 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('users:user_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object != request.user and not request.user.is_superuser:
+            messages.error(request, _("У вас нет прав для изменения другого пользователя."))
+            return redirect(self.success_url)
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
