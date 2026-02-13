@@ -51,7 +51,7 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
     template_name = 'tasks/task_form.html'
     fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy('tasks:task_list')
-    success_message = _("Задача успешно обновлена!")
+    success_message = _("Задача успешно изменена!")
 
     def test_func(self):
         user = self.request.user

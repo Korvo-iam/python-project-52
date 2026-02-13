@@ -25,7 +25,7 @@ class TaskCRUDTest(TestCase):
         self.assertTrue(any("Задача успешно создана!" in str(m) for m in messages))
         self.assertRedirects(response, reverse('tasks:task_list'))
 
-    def test_update_task_message(self): #проверка flash успешного обновления
+    def test_update_task_message(self): #проверка flash успешного изменения
         task = Task.objects.create(
             name='Старая задача',
             description='Описание',
@@ -39,7 +39,7 @@ class TaskCRUDTest(TestCase):
             'executor': self.admin.id,
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("Задача успешно обновлена!" in str(m) for m in messages))
+        self.assertTrue(any("Задача успешно изменена!" in str(m) for m in messages))
 
     def test_delete_task_message(self): #проверка flash успешного удаления
         task = Task.objects.create(
@@ -62,7 +62,7 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Task.objects.filter(name='Тестовая задача').exists())
 
-    def test_update_task(self): #проверка обновления задачи
+    def test_update_task(self): #проверка изменения задачи
         task = Task.objects.create(
             name='Старая задача',
             description='Описание',
@@ -70,14 +70,14 @@ class TaskCRUDTest(TestCase):
             author=self.admin
         )
         response = self.client.post(reverse('tasks:task_update', args=[task.id]), {
-            'name': 'Обновленная задача',
+            'name': 'Измененная задача',
             'description': 'Новое описание',
             'status': self.status.id,
             'executor': self.admin.id,
         })
         self.assertEqual(response.status_code, 302)
         task.refresh_from_db()
-        self.assertEqual(task.name, 'Обновленная задача')
+        self.assertEqual(task.name, 'Измененная задача')
         self.assertEqual(task.description, 'Новое описание')
 
     def test_delete_task(self): #проверка удаления задачи
