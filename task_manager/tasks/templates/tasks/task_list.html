@@ -2,13 +2,7 @@
 
 {% extends "base.html" %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+
 
 {% block title %}Список задач{% endblock %}
 
@@ -80,15 +74,10 @@
                        class="btn btn-sm btn-warning">
                         Изменить
                     </a>
-
-                    {% if task.author == request.user or request.user.is_superuser %}
                         <a href="{% url 'tasks:task_delete' task.pk %}"
                            class="btn btn-sm btn-danger">
                             Удалить
                         </a>
-                    {% else %}
-                        <span style="color: whitesmoke;">Нет доступа</span>
-                    {% endif %}
                 </td>
             </tr>
             {% empty %}
