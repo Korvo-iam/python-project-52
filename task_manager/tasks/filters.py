@@ -25,7 +25,7 @@ class TaskFilter(django_filters.FilterSet):
     self_tasks = django_filters.BooleanFilter(
         method='filter_self_tasks',
         label='Только свои задачи',
-        widget=forms.CheckboxInput
+        widget=forms.CheckboxInput,
     )
 
     class Meta:
@@ -34,6 +34,7 @@ class TaskFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.form.label_suffix = ''
 
         self.filters['executor'].field.label_from_instance = \
             lambda obj: obj.username or f"User {obj.pk}"
