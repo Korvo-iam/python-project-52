@@ -9,8 +9,6 @@ User = get_user_model()
 class Task(models.Model):
     name = models.CharField("Имя", max_length=255)
     description = models.TextField("Описание", blank=True)
-    labels = models.ManyToManyField(Label, blank=True, related_name='tasks')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     status = models.ForeignKey(
         'statuses.Status',
         on_delete=models.PROTECT,
@@ -31,6 +29,13 @@ class Task(models.Model):
         verbose_name="Автор",
         related_name='tasks_created'
     )
+    labels = models.ManyToManyField(
+    Label,
+    blank=True,
+    related_name='tasks',
+    verbose_name="Метки"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     def __str__(self):
         return self.name
