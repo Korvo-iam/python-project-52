@@ -15,22 +15,21 @@ from dotenv import load_dotenv
 from pathlib import Path
 import dj_database_url
 import os
-#import rollbar
+# import rollbar
 
 load_dotenv()
 
 ROLLBAR_ACCESS_TOKEN = os.getenv('ROLLBAR_ACCESS_TOKEN')
 ROLLBAR_ENVIRONMENT = os.getenv('ROLLBAR_ENVIRONMENT', 'development')
 
-#rollbar.init(
+# rollbar.init(
 #    access_token=ROLLBAR_ACCESS_TOKEN,
 #    environment=ROLLBAR_ENVIRONMENT,
 #    code_version='1.0'
-#)
+# )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -122,18 +121,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    #{
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa: E501
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa: E501
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa: E501
-    #},
-    #{
+    # },
+    # {
     #    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa: E501
-    #},
+    # },
 ]
 
 

@@ -7,14 +7,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 # Create your tests here.
 
+
 class TaskCRUDTest(TestCase):
 
-    def setUp(self): #создание суперпользователя
+    def setUp(self):  # создание суперпользователя
         self.admin = User.objects.create_superuser(username='admin', email='admin@test.com', password='pass')  # noqa: E501
         self.client.login(username='admin', password='pass')
-        self.status = Status.objects.create(name='Новый')# создаём статус для задач  # noqa: E501
+        self.status = Status.objects.create(name='Новый')  # создаём статус для задач  # noqa: E501
 
-    def test_create_task_message(self): #проверка flash успешного создания
+    def test_create_task_message(self):  # проверка flash успешного создания
         response = self.client.post(reverse('tasks:task_create'), {
             'name': 'Flash задача',
             'description': 'Описание тестовой задачи',
@@ -27,7 +28,7 @@ class TaskCRUDTest(TestCase):
                 "Задача успешно создана!" in str(m) for m in messages))
         self.assertRedirects(response, reverse('tasks:task_list'))
 
-    def test_update_task_message(self): #проверка flash успешного изменения
+    def test_update_task_message(self):  # проверка flash успешного изменения
         task = Task.objects.create(
             name='Старая задача',
             description='Описание',
@@ -48,7 +49,7 @@ class TaskCRUDTest(TestCase):
             any(
                 "Задача успешно изменена!" in str(m) for m in messages))
 
-    def test_delete_task_message(self): #проверка flash успешного удаления
+    def test_delete_task_message(self):  # проверка flash успешного удаления
         task = Task.objects.create(
             name='Удаляемая задача',
             description='Описание',
@@ -65,7 +66,7 @@ class TaskCRUDTest(TestCase):
             any(
                 "Задача успешно удалена!" in str(m) for m in messages))
 
-    def test_create_task(self): #проверка создания задачи
+    def test_create_task(self):  # проверка создания задачи
         response = self.client.post(reverse('tasks:task_create'),
         {
             'name': 'Тестовая задача',
@@ -76,7 +77,7 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Task.objects.filter(name='Тестовая задача').exists())
 
-    def test_update_task(self): #проверка изменения задачи
+    def test_update_task(self):  # проверка изменения задачи
         task = Task.objects.create(
             name='Старая задача',
             description='Описание',
@@ -97,7 +98,7 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(task.name, 'Измененная задача')
         self.assertEqual(task.description, 'Новое описание')
 
-    def test_delete_task(self): #проверка удаления задачи
+    def test_delete_task(self):  # проверка удаления задачи
         task = Task.objects.create(
             name='Удаляемая задача',
             description='Описание',
@@ -110,7 +111,7 @@ class TaskCRUDTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Task.objects.filter(name='Удаляемая задача').exists())
 
-    def test_access_requires_login(self): #проверка на безуспешность просмотра списка пользователей неавторизованным пользователем  # noqa: E501
+    def test_access_requires_login(self):  # проверка на безуспешность просмотра списка пользователей неавторизованным пользователем  # noqa: E501
         self.client.logout()
         response = self.client.get(reverse('tasks:task_list'))
         self.assertRedirects(response, '/login/?next=/tasks/')

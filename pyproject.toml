@@ -32,8 +32,7 @@ exclude = [
     "venv",
     "__pycache__",
 ]
+preview = true
 
 [tool.ruff.lint]
-select = ["E", "F"]
-
-
+select = ["E", "F","E261", "E262", "E302"]

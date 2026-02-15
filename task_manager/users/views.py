@@ -12,10 +12,12 @@ from .forms import UserForm
 
 User = get_user_model()
 
+
 class UserListView(ListView):
     model = User
     template_name = 'users/user_list.html'
     context_object_name = 'users'
+
 
 class UserCreateView(CreateView):
     model = User
@@ -27,6 +29,7 @@ class UserCreateView(CreateView):
         messages.success(self.request, _(
             "Пользователь успешно зарегистрирован!"))
         return super().form_valid(form)
+
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
@@ -49,6 +52,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
         return form
+
 
 class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
@@ -73,6 +77,7 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
                 "Нельзя удалить пользователя, пока у него есть задачи."))
         return redirect(self.success_url)
 
+
 class LogIn(LoginView):
     template_name = 'registration/login.html'
     success_url = reverse_lazy('home')
@@ -89,6 +94,7 @@ class LogIn(LoginView):
     
     def get_success_url(self):
         return reverse_lazy('home')
+
 
 class LogOut(LogoutView):
     next_page = reverse_lazy('home')

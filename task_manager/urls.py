@@ -19,16 +19,17 @@ from django.contrib import admin
 from django.urls import path, include
 from task_manager.views import HomeView
 from task_manager.users.views import LogIn, LogOut
-#from . import views
+# from . import views
 
 
 def home(request):
     return HttpResponse("Halo")
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #rollback подключен успешно
-    #path('', views.index, name='index'),   
+    # rollback подключен успешно
+    # path('', views.index, name='index'),   
     path('', HomeView.as_view(), name='home'),
     path('users/', include('task_manager.users.urls', namespace='users')),
     path('login/', LogIn.as_view(), name='login'),
