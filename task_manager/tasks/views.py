@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView  # noqa: E501
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
@@ -46,7 +46,7 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):  # noqa: E501
     model = Task
     template_name = 'tasks/task_form.html'
     fields = ['name', 'description', 'status', 'executor', 'labels']
@@ -59,10 +59,11 @@ class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
         return user == task.author or user.is_superuser
 
     def handle_no_permission(self):
-        messages.error(self.request, _("Задачу может изменить только ее автор."))
+        messages.error(self.request,
+                       _("Задачу может изменить только ее автор."))
         return redirect('tasks:task_list')
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):  # noqa: E501
     model = Task
     template_name = 'tasks/task_confirm_delete.html'
     success_url = reverse_lazy('tasks:task_list')

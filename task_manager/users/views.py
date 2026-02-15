@@ -24,7 +24,8 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        messages.success(self.request, _("Пользователь успешно зарегистрирован!"))
+        messages.success(self.request, _(
+            "Пользователь успешно зарегистрирован!"))
         return super().form_valid(form)
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
@@ -36,7 +37,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj != request.user and not request.user.is_superuser:
-            messages.error(request, _("У вас нет прав для изменения другого пользователя."))
+            messages.error(request, _(
+                "У вас нет прав для изменения другого пользователя."))
             return redirect('users:user_list')
         return super().dispatch(request, *args, **kwargs)
 
@@ -56,7 +58,8 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object != request.user and not request.user.is_superuser:
-            messages.error(request, _("У вас нет прав для изменения другого пользователя."))
+            messages.error(request, _(
+                "У вас нет прав для изменения другого пользователя."))
             return redirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
 
@@ -66,7 +69,8 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             self.object.delete()
             messages.success(request, _("Пользователь успешно удален!"))
         except ProtectedError:
-            messages.error(request, _("Нельзя удалить пользователя, пока у него есть задачи."))
+            messages.error(request, _(
+                "Нельзя удалить пользователя, пока у него есть задачи."))
         return redirect(self.success_url)
 
 class LogIn(LoginView):

@@ -9,7 +9,9 @@ User = get_user_model()
 class UserCRUDTest(TestCase):
 
     def setUp(self):  # суперпользователь для авторизации
-        self.admin = User.objects.create_superuser(username='admin', password='pass')
+        self.admin = User.objects.create_superuser(
+            username='admin',
+            password='pass')
         self.client.login(username='admin', password='pass')
     
     def test_create_user_message(self): #проверка flash успешного создания
@@ -21,12 +23,18 @@ class UserCRUDTest(TestCase):
             'password2': '12345'
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any("успешно зарегистрирован" in str(m) for m in messages))
-        self.assertRedirects(response, reverse('login')) #проверка на редирект на логин
+        self.assertTrue(
+            any(
+                "успешно зарегистрирован" in str(m) for m in messages))
+        self.assertRedirects(response, reverse('login')) #проверка на редирект на логин  # noqa: E501
 
     def test_update_user_message(self): #проверка flash успешного обновления
         user = User.objects.create_user(username='updateuser', password='12345')
-        response = self.client.post(reverse('users:user_update', args=[user.id]), {
+        response = self.client.post(
+            reverse(
+                'users:user_update',
+                args=[user.id]),
+            {
             'username': 'updated',
             'first_name': 'updated',
             'last_name': 'user',
@@ -38,7 +46,10 @@ class UserCRUDTest(TestCase):
 
     def test_delete_user_message(self): #проверка flash успешного удаления
         user = User.objects.create_user(username='deluser', password='12345')
-        response = self.client.post(reverse('users:user_delete', args=[user.id]), follow=True)
+        response = self.client.post(reverse(
+            'users:user_delete',
+            args=[user.id]),
+            follow=True)
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("успешно удален" in str(m) for m in messages))
 
@@ -51,7 +62,7 @@ class UserCRUDTest(TestCase):
             'password2': '12345'
         })
         self.assertEqual(response.status_code, 302)  # редирект после создания
-        self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин
+        self.assertRedirects(response, reverse('login'))  # проверка на редирект на логин  # noqa: E501
         self.assertTrue(User.objects.filter(username='testuser').exists())
 
     def test_update_user(self): #проверка обновления пользователя
@@ -72,7 +83,11 @@ class UserCRUDTest(TestCase):
 
     def test_delete_user(self):
         user = User.objects.create_user(username='deluser', password='12345')
-        response = self.client.post(reverse('users:user_delete', args=[user.id]), follow=True)
-        messages = list(get_messages(response.wsgi_request)) #проверка flash-сообщения
+        response = self.client.post(
+            reverse(
+            'users:user_delete',
+            args=[user.id]),
+            follow=True)
+        messages = list(get_messages(response.wsgi_request)) #проверка flash-сообщения  # noqa: E501
         self.assertTrue(any("успешно удален" in str(m) for m in messages))
-        self.assertFalse(User.objects.filter(username='deluser').exists()) #проверка удаления пользователя
+        self.assertFalse(User.objects.filter(username='deluser').exists()) #проверка удаления пользователя  # noqa: E501
