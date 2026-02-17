@@ -25,7 +25,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e .
+          pip install coverage
 
-      # тесты
-      - name: Run tests
-        run: python3 manage.py test
+      # тесты + coverage
+      - name: Run tests with coverage
+        run: |
+          coverage run manage.py test
+          coverage xml
+
+      # SonarCloud
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.projectKey=Korvo-iam_python-project-52
+            -Dsonar.organization=korvo-iam
+            -Dsonar.python.coverage.reportPaths=coverage.xml
