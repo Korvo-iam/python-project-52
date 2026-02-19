@@ -16,6 +16,10 @@ dev:
 check:
 	uv run ruff check
 
+all-test:
+	make test
+	make check
+
 render-start:
 	gunicorn task_manager.wsgi --bind 0.0.0.0:${PORT}
 
